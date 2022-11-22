@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="14e28a7f-0386-43b9-ad6e-28f6acb6ca83" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="mysecondmuleapplicationFlow" doc:id="f162746b-963c-4d7f-92a5-e8d97d5e5163" >
+		<http:listener doc:name="Listener" doc:id="bb131ad4-80c8-4b1e-b9cf-6358b1c27bbe" config-ref="HTTP_Listener_config" path="/MULE2"/>
+		<logger level="INFO" doc:name="Logger" doc:id="12f0b3ce-9bc1-4e02-aa68-4d660bd744e1" />
+		<set-payload value='"HI...I AM GOING OUT FOR SHOPPING"' doc:name="OVER WRITE" doc:id="31b7481e-bc7e-40fd-9420-d90be1dd1f96" />
+		<logger level="INFO" doc:name="OUTPUT" doc:id="2b78bebb-d744-4bd6-85ce-4ac0a8923834" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="40f6df13-00e2-4bc4-b86d-a1c6898eaca3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
